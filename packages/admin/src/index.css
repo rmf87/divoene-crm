@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: Playfair Display, ui-serif, Georgia, serif;
+  --font-sans: DM Sans, ui-sans-serif, system-ui, sans-serif;
+
+  --color-olive-50: #f4f6f1;
+  --color-olive-100: #e5e9dd;
+  --color-olive-200: #ccd4bc;
+  --color-olive-300: #a7b58e;
+  --color-olive-400: #8a9a6a;
+  --color-olive-500: #6b7d4e;
+  --color-olive-600: #556440;
+  --color-olive-700: #434f35;
+  --color-olive-800: #38412e;
+  --color-olive-900: #1a2f1d;
+
+  --color-terracotta-50: #fbf3ee;
+  --color-terracotta-400: #d98e5f;
+  --color-terracotta-500: #c67b4b;
+  --color-terracotta-600: #b06a3e;
+  --color-terracotta-700: #955933;
+
+  --color-earth-50: #faf6f0;
+  --color-earth-100: #f3ece1;
+  --color-earth-200: #e6d9c6;
+  --color-earth-300: #d4c2a7;
+  --color-earth-700: #8a7355;
+}
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role='button']:not(:disabled),
+  select,
+  label[for] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-olive-500);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+/* ── Dark theme: centralized palette override ───────────────────────────────
+   Utility classes are remapped inside a .dark scope (unlayered so they win
+   the cascade against @layer utilities). Solid accent backgrounds and
+   text-white on colored buttons are intentionally left unchanged. */
+
+html {
+  background-color: #f7f3ec;
+}
+html.dark {
+  background-color: #141a15;
+}
+html body {
+  background-color: #f7f3ec;
+  color: #1a2f1d;
+}
+html.dark body {
+  background-color: #141a15;
+  color: #e8ece2;
+}
+
+.dark .bg-white {
+  background-color: #1b231c;
+}
+.dark .bg-white\/80 {
+  background-color: rgba(27, 35, 28, 0.8);
+}
+
+.dark .bg-earth-50 { background-color: #212a22; }
+.dark .bg-earth-100 { background-color: #262f27; }
+.dark .bg-earth-200 { background-color: #313c32; }
+.dark .bg-earth-300 { background-color: #3d4a3e; }
+
+.dark .bg-olive-50 { background-color: #2a3526; }
+.dark .bg-olive-100 { background-color: #33422e; }
+.dark .bg-olive-200 { background-color: #3d4f37; }
+
+.dark .text-olive-300 { color: #5d6f52; }
+.dark .text-olive-400 { color: #7c8c63; }
+.dark .text-olive-500 { color: #93a47b; }
+.dark .text-olive-600 { color: #a8b890; }
+.dark .text-olive-700 { color: #c0cbb3; }
+.dark .text-olive-800 { color: #d6ded0; }
+.dark .text-olive-900 { color: #e8ece2; }
+
+.dark .bg-red-50 { background-color: #3a2120; }
+.dark .text-red-600 { color: #f0a093; }
+
+.dark .bg-amber-50 { background-color: #3d331f; }
+.dark .border-amber-200 { border-color: #4a3d24; }
+.dark .bg-amber-100 { background-color: #3d331f; }
+.dark .text-amber-700 { color: #e0b878; }
+.dark .text-amber-800 { color: #ecc98a; }
+
+.dark .bg-blue-100 { background-color: #1f3342; }
+.dark .text-blue-700 { color: #90c3ea; }
+
+.dark .bg-green-100 { background-color: #1f3527; }
+.dark .text-green-700 { color: #7fd39a; }
+.dark .text-green-800 { color: #90d7a5; }
+
+.dark .bg-purple-100 { background-color: #2c2740; }
+.dark .text-purple-700 { color: #b8a6e8; }
+
+.dark .bg-yellow-100 { background-color: #3d3320; }
+.dark .text-yellow-800 { color: #ecc98a; }
+
+.dark .bg-gray-100 { background-color: #20261f; }
+.dark .text-gray-400 { color: #aeb8af; }
+.dark .text-gray-500 { color: #9aa89b; }
+.dark .text-gray-900 { color: #e7ece6; }
+
+.dark .bg-terracotta-50 { background-color: #3a2a20; }
+.dark .text-terracotta-400 { color: #e0a06a; }
+.dark .text-terracotta-500 { color: #d98e5f; }
+.dark .text-terracotta-600 { color: #c67b4b; }
+.dark .text-terracotta-700 { color: #b5653a; }
+
+.dark .border-earth-100 { border-color: #313c32; }
+.dark .border-earth-200 { border-color: #3a463c; }
+.dark .border-earth-300 { border-color: #46524a; }
+
+.dark .text-earth-700 { color: #c8b494; }
+
+/* WhatsApp chat — hardcoded surfaces */
+.dark .bg-\[\#ECE5DD\] {
+  background-color: #20261f;
+}
+.dark .bg-\[\#DCF8C6\] {
+  background-color: #2e3d2a;
+}

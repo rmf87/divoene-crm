@@ -1,0 +1,3 @@
+# Compiled artifacts — sources are .ts/.tsx
+src/**/*.js
+!src/**/*.d.ts

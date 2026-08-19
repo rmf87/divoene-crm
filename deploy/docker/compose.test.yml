@@ -1,0 +1,55 @@
+# Test environment — podman-compose
+# Run: just test-venom
+# Internal network, no host ports. Venom runs API tests against server.
+
+services:
+  server:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile.server
+    env_file: ../config/env.test
+    depends_on:
+      fixture:
+        condition: service_completed_successfully
+    environment:
+      - GIN_MODE=release
+    volumes:
+      - test_data:/data
+    networks:
+      - divoene-test-net
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  fixture:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile.server
+    env_file: ../config/env.test
+    entrypoint: ["/divoene", "seed", "--demo", "--db-path", "/data/divoene.test.sqlite3"]
+    volumes:
+      - test_data:/data
+    networks:
+      - divoene-test-net
+
+  venom:
+    image: docker.io/ovhcom/venom:latest
+    depends_on:
+      server:
+        condition: service_healthy
+    volumes:
+      - ../../tests/acceptance:/tests:Z
+    working_dir: /tests
+    command: run "*.yaml"
+    networks:
+      - divoene-test-net
+
+volumes:
+  test_data:
+
+networks:
+  divoene-test-net:
+    internal: true

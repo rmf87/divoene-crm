@@ -1,0 +1,16 @@
+FROM golang:1.25-alpine AS builder
+RUN apk add --no-cache gcc musl-dev
+WORKDIR /build
+COPY server/go.mod server/go.sum ./
+RUN go mod download
+COPY server/ ./
+RUN CGO_ENABLED=1 go build -o /app/divoene ./cli/
+
+FROM alpine:3.21
+RUN apk add --no-cache ca-certificates curl
+COPY --from=builder /app/divoene /divoene
+COPY deploy/docker/run.sh /run.sh
+RUN chmod +x /run.sh
+EXPOSE 8080
+VOLUME ["/data"]
+ENTRYPOINT ["/run.sh"]
